@@ -23,7 +23,7 @@ res.status(200).json({
 });
 });
 
-app.use("/auth",authRoutes);
+app.use("/", authRoutes);
 // app.use("/artifacts", artifactRoutes);
 export default app;
 
