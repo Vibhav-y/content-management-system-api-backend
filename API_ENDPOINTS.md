@@ -24,6 +24,8 @@
 }
 ```
 
+> **Security Note:** The OTP is currently returned in the API response for development/testing purposes. In production, the OTP should be sent via email/SMS and not returned in the response.
+
 **Error Response (400):**
 ```json
 {
