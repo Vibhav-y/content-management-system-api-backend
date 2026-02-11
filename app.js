@@ -23,7 +23,9 @@ res.status(200).json({
 });
 });
 
-app.use("/auth",authRoutes);
+// Auth routes are mounted at root level
+// Endpoints: /signup/initiate, /signup/verify, /login
+app.use("/", authRoutes);
 // app.use("/artifacts", artifactRoutes);
 export default app;
 
