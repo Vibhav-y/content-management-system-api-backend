@@ -1,8 +1,10 @@
 import express from "express";
 import cors from "cors";
 import morgan from "morgan";
-import authRoutes from "./routes/authRoute.js";
-// import artifactRoutes from "./routes/artifacts.route.js"
+import authRoutes from "./routes/auth.route.js";
+import artifactRoutes from "./routes/artifacts.route.js"
+import likes from "./routes/likes.routes.js";
+import comment from "./routes/comment.route.js";
 import cookieParser from "cookie-parser";
 const app = express();
 
@@ -17,16 +19,16 @@ app.use(morgan("dev"));
 app.use(cookieParser());
 /* Test Route */
 app.get("/", (req, res) => {
-res.status(200).json({
+  res.status(200).json({
     success: true,
     message: "CMS Backend is running"
-});
+  });
 });
 
-// Auth routes are mounted at root level
-// Endpoints: /signup/initiate, /signup/verify, /login
-app.use("/", authRoutes);
-// app.use("/artifacts", artifactRoutes);
+app.use("/auth",authRoutes);
+app.use("/artifacts", artifactRoutes);
+app.use("/likes", likes);
+app.use("/comments", comment);
 export default app;
 
 
