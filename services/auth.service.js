@@ -65,7 +65,7 @@ export const verifySignupOtpService = async ({
     name,
     email,
     password,
-    role: "VIEWER" // Force VIEWER role for public signup
+    role: role || "VIEWER"
   });
 
   // 5. Destroy OTP (one-time use)

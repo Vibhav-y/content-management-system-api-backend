@@ -18,12 +18,11 @@ const otpSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-otpSchema.pre("save", async function (next) {
+otpSchema.pre("save", async function () {
   // Prevent re-hashing
-  if (!this.isModified("otp")) return next();
+  if (!this.isModified("otp")) return;
 
   const saltRounds = 10;
   this.otp = await bcrypt.hash(this.otp, saltRounds);
-  next();
 });
 export default mongoose.model("OTP", otpSchema);
