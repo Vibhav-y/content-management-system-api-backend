@@ -1,27 +1,35 @@
 import jwt from "jsonwebtoken";
 
-export const authMiddleware = (req, res, next) => {
+import User from "../models/users.js";
+
+export const authMiddleware = async (req, res, next) => {
   try {
+    // Check Authorization header or Cookie
     const token =
-      req.cookies?.token ||
-      req.headers.authorization?.split(" ")[1];
+      req.headers.authorization?.split(" ")[1] || req.cookies?.token;
 
     if (!token) {
       return res.status(401).json({
         success: false,
-        message: "Authentication required"
+        message: "Access denied. No token provided.",
       });
     }
 
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    req.user = await User.findById(decoded.id).select("-password");
 
-    req.user = decoded; // { id, role }
+    if (!req.user) {
+      return res.status(401).json({
+        success: false,
+        message: "Invalid token. User not found.",
+      });
+    }
 
     next();
   } catch (error) {
-    return res.status(401).json({
+    res.status(401).json({
       success: false,
-      message: "Invalid or expired token"
+      message: "Invalid token",
     });
   }
 };
