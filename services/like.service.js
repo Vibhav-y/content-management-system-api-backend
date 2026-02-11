@@ -1,9 +1,16 @@
-import Like from "../models/likes.js";
+import Like from "../models/like.js";
+import Artifact from "../models/artifact.js";
 
 export const toggleLikeService = async ({ artifactId, userId }) => {
+  // Check if artifact exists
+  const artifactExists = await Artifact.findById(artifactId);
+  if (!artifactExists) {
+    throw new Error("Artifact not found");
+  }
+
   const existingLike = await Like.findOne({
     artifact: artifactId,
-    user: userId
+    user: userId,
   });
 
   if (existingLike) {
@@ -13,18 +20,13 @@ export const toggleLikeService = async ({ artifactId, userId }) => {
 
   await Like.create({
     artifact: artifactId,
-    user: userId
+    user: userId,
   });
 
   return { liked: true };
 };
 
-
-
-
-
-export const getLikeCountService = async (artifactId) => {
+export const getLikesService = async (artifactId) => {
   const count = await Like.countDocuments({ artifact: artifactId });
-  return count;
+  return { count };
 };
-

@@ -4,24 +4,27 @@ const artifactSchema = new mongoose.Schema(
   {
     title: {
       type: String,
-      required: true
+      required: true,
     },
     content: {
       type: String,
-      required: true
+      required: true,
+    },
+    media: {
+      type: String,
     },
     status: {
       type: String,
       enum: ["DRAFT", "PUBLISHED", "ARCHIVED"],
-      default: "DRAFT"
+      default: "DRAFT",
     },
     author: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
-      required: true
-    }
+      required: true,
+    },
   },
-  { timestamps: true }
+  { timestamps: true },
 );
 
 export default mongoose.model("Artifact", artifactSchema);
