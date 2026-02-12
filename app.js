@@ -6,9 +6,8 @@ import artifactRoutes from "./routes/artifacts.route.js"
 import likes from "./routes/likes.routes.js";
 import comment from "./routes/comment.route.js";
 import cookieParser from "cookie-parser";
-import { testing } from "./crons/testing.js";
 import webhookRoutes from "./webhook/webhooks.js"
-import chatRoutes from "./routes/chats.route.js"
+// import chatRoutes from "./routes/chats.route.js"
 const app = express();
 
 
@@ -19,7 +18,7 @@ app.use(express.urlencoded({ extended: true, limit: "10mb" }));
 app.use(morgan("dev"));
 
 
-testing();
+// testing();
 
 
 app.use(cookieParser());
@@ -38,7 +37,7 @@ app.use("/auth",authRoutes);
 app.use("/artifacts", artifactRoutes);
 app.use("/likes", likes);
 app.use("/comments", comment);
-app.use("/chats", chatRoutes);
+// app.use("/chats", chatRoutes);
 
 export default app;
 
