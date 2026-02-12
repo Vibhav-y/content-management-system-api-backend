@@ -30,12 +30,11 @@ const userSchema = new mongoose.Schema(
 );
 
 
-userSchema.pre("save", async function (next) {
+userSchema.pre("save", async function () {
   // Only hash if password is new or modified
-  if (!this.isModified("password")) return next();
+  if (!this.isModified("password")) return;
 
   const saltRounds = 10;
   this.password = await bcrypt.hash(this.password, saltRounds);
-  next();
 });
 export default mongoose.model("User", userSchema);
